@@ -1,0 +1,93 @@
+<idea-plugin version="2">
+	<extensions defaultExtensionNs="org.eclipse.xtext.idea">
+		<package
+			uri="http://www.ac.uk/ox/cs/mml/MML"
+			class="uk.ac.ox.cs.mml.mML.MMLPackage"
+		/>
+		<resourceFactory 
+			type="mmlx"
+			class="org.eclipse.xtext.resource.IResourceFactory"
+			factoryClass="uk.ac.ox.cs.mml.idea.MMLExtensionFactory"
+		/>
+		<resourceServiceProvider
+			uriExtension="mmlx"
+			class="org.eclipse.xtext.idea.resource.IResourceIdeaServiceProvider"
+			factoryClass="uk.ac.ox.cs.mml.idea.MMLExtensionFactory"
+		/>
+
+		<lang.setup
+			language="uk.ac.ox.cs.mml.MML"
+			implementationClass="uk.ac.ox.cs.mml.idea.MMLIdeaSetup"
+		/>
+	</extensions>
+
+	<extensions defaultExtensionNs="com.intellij">
+		<psi.treeChangePreprocessor implementation="uk.ac.ox.cs.mml.idea.lang.psi.MMLCodeBlockModificationListener"/>
+
+		<fileTypeFactory implementation="uk.ac.ox.cs.mml.idea.lang.MMLFileTypeFactory"/>
+		<stubElementTypeHolder class="uk.ac.ox.cs.mml.idea.lang.MMLElementTypeProvider"/>
+		<lang.ast.factory 
+			language="uk.ac.ox.cs.mml.MML"
+			factoryClass="uk.ac.ox.cs.mml.idea.MMLExtensionFactory"
+			implementationClass="org.eclipse.xtext.idea.lang.BaseXtextASTFactory"
+		/>
+		<lang.parserDefinition 
+			language="uk.ac.ox.cs.mml.MML"
+			factoryClass="uk.ac.ox.cs.mml.idea.MMLExtensionFactory"
+			implementationClass="uk.ac.ox.cs.mml.idea.lang.parser.MMLParserDefinition"
+		/>
+		<lang.findUsagesProvider 
+			language="uk.ac.ox.cs.mml.MML"
+			factoryClass="uk.ac.ox.cs.mml.idea.MMLExtensionFactory"
+			implementationClass="org.eclipse.xtext.idea.findusages.BaseXtextFindUsageProvider"
+		/>
+		<lang.refactoringSupport 
+			language="uk.ac.ox.cs.mml.MML"
+			factoryClass="uk.ac.ox.cs.mml.idea.MMLExtensionFactory"
+			implementationClass="org.eclipse.xtext.idea.refactoring.BaseXtextRefactoringSupportProvider"
+		/>
+		<lang.namesValidator 
+			language="uk.ac.ox.cs.mml.MML"
+			factoryClass="uk.ac.ox.cs.mml.idea.MMLExtensionFactory"
+			implementationClass="com.intellij.lang.refactoring.NamesValidator"
+		/>
+		<lang.syntaxHighlighterFactory key="uk.ac.ox.cs.mml.MML" implementationClass="uk.ac.ox.cs.mml.idea.highlighting.MMLSyntaxHighlighterFactory" />
+		<lang.braceMatcher 
+			language="uk.ac.ox.cs.mml.MML"
+			factoryClass="uk.ac.ox.cs.mml.idea.MMLExtensionFactory"
+			implementationClass="com.intellij.lang.PairedBraceMatcher"
+		/>
+		<annotator 
+			language="uk.ac.ox.cs.mml.MML"
+			factoryClass="uk.ac.ox.cs.mml.idea.MMLExtensionFactory"
+			implementationClass="org.eclipse.xtext.idea.annotation.IssueAnnotator"
+		/>
+		<completion.contributor language="uk.ac.ox.cs.mml.MML" implementationClass="uk.ac.ox.cs.mml.idea.completion.MMLCompletionContributor"/>
+		<pom.declarationSearcher implementation="uk.ac.ox.cs.mml.idea.lang.pom.MMLPomDeclarationSearcher"/>
+
+		<lang.psiStructureViewFactory 
+			language="uk.ac.ox.cs.mml.MML"
+			factoryClass="uk.ac.ox.cs.mml.idea.MMLExtensionFactory"
+			implementationClass="com.intellij.lang.PsiStructureViewFactory"
+		/>
+		<facetType implementation="uk.ac.ox.cs.mml.idea.facet.MMLFacetType"/>
+		<lang.documentationProvider 
+			language="uk.ac.ox.cs.mml.MML"
+			factoryClass="uk.ac.ox.cs.mml.idea.MMLExtensionFactory"
+			implementationClass="org.eclipse.xtext.idea.documentation.IdeaDocumentationProvider"
+		/>
+		<colorSettingsPage implementation="uk.ac.ox.cs.mml.idea.highlighting.MMLColorSettingsPage"/>
+		<highlightVisitor implementation="uk.ac.ox.cs.mml.idea.highlighting.MMLSemanticHighlightVisitor"/>
+
+		<lang.formatter 
+			language="uk.ac.ox.cs.mml.MML"
+			factoryClass="uk.ac.ox.cs.mml.idea.MMLExtensionFactory"
+			implementationClass="com.intellij.formatting.FormattingModelBuilder"
+		/>
+		<lang.commenter 
+			language="uk.ac.ox.cs.mml.MML"
+			factoryClass="uk.ac.ox.cs.mml.idea.MMLExtensionFactory"
+			implementationClass="com.intellij.lang.CodeDocumentationAwareCommenter"
+		/>
+	</extensions>
+</idea-plugin>

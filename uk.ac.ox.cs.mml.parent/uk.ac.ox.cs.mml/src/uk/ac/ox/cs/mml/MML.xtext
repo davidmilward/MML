@@ -1,0 +1,101 @@
+grammar uk.ac.ox.cs.mml.MML with org.eclipse.xtext.common.Terminals
+
+generate mML "http://www.ac.uk/ox/cs/mml/MML"
+
+DomainRegistry :
+	(registeredItems += DataModel)*
+;
+
+DataModel:
+	'DataModel' name = QualifiedName 'modelid:' INT '@' '(' Version ')' '{'
+	(elements += AbstractItem)*
+	(relations += Relationship)*
+	(constraint += Constraint)*
+	'}'
+;
+
+AbstractItem:
+	DataModel | DataClass | DataElement | DataType | Import | ExtensionItem  
+;
+
+QualifiedName:
+		ID('.' ID)*
+;
+Version:
+		INT '.' INT '.' INT
+;
+
+Reference:
+	"ref" name=ID ":" type=[AbstractItem]
+;
+
+RelationSource:
+	DataModel | DataClass | DataElement | DataType 
+;
+
+RelationDestination:
+	DataModel | DataClass | DataElement | DataType
+;
+
+Relationship:
+	'relationship' (src = RelationSource ':' dest = RelationDestination)
+;
+
+ExtensionItem:
+	'extension' key = ID '=' value = STRING';'
+;
+
+Import:
+	'import' importedNamespace = QualifiedNameWithWildcard
+;
+
+QualifiedNameWithWildcard:
+	QualifiedName '.*'?
+;
+
+DataType:
+	BasicType | ReferenceType | EnumeratedType
+;
+
+EnumeratedType:
+	'datatype' name  = ID 'modelid:' INT '@' '(' Version ')' type=BasicType(array ?='[' (length=INT)? ']')?
+;
+ 
+ReferenceType:  
+	'datatype' name  = ID 'modelid:' INT '@' '(' Version ')' type=[DataClass]
+;
+
+BasicType:  
+	'datatype' name  = ID 'modelid:' INT '@' '(' Version ')' typeName=STRING|INT
+;
+
+ContainerElement:
+	DataClass| DataElement | Reference
+;
+
+DataClass:
+	'DataClass' name = ID ('extends' superType = [DataClass])? 'modelid:' INT '@' '(' Version ')' '{'
+	  (dataelements += ContainerElement)*
+	  (extension += ExtensionItem)*
+	  '}'
+;
+
+DataElement:
+	'DataElement' name = ID 'modelid:' INT '@' '(' Version ')' ':' type = [DataType|QualifiedName]
+;
+
+ConstraintSource:
+	DataModel | DataClass | DataElement | DataType 
+;
+
+ConstraintDestination:
+	DataModel | DataClass | DataElement | DataType
+;
+
+Constraint:
+	('constraint' (src = ConstraintSource ':' pred = Predicate ':' dest = ConstraintDestination))?
+;
+
+Predicate:
+	'predicate' predicate = 'string'
+;
